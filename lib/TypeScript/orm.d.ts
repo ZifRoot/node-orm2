@@ -19,7 +19,9 @@ declare module "orm" {
             settings: Settings;
 
             drop(callback?: (err: Error) => void): Model;
+            dropAsync(): Promise<Model>;
             sync(callback?: (err: Error) => void): Model;
+            syncAsync(): Promise<Model>;
             get(...args: any[]): Model;
             find(conditions: { [property: string]: any }, callback: (err: Error, results: Instance[]) => void): Model;
             find(conditions: { [property: string]: any }, options: {
@@ -160,7 +162,8 @@ declare module "orm" {
 
             define(name: string, properties: { [key: string]: Property }, opts?: ModelOptions): Model;
             ping(callback: (err: Error) => void): ORM;
-            close(callback: (err: Error) => void): ORM;
+          close(callback: (err: Error) => void): ORM;
+          closeAsync(): Promise<ORM>;
             load(file: string, callback: (err: Error) => void): any;
             sync(callback: (err: Error) => void): ORM;
             drop(callback: (err: Error) => void): ORM;
@@ -265,9 +268,9 @@ declare module "orm" {
             define(db: ORM, models: { [key: string]: Model });
         }): (req, res, next) => void;
         export function use(connection, protocol: string, options, callback: (err: Error, db?: ORM) => void);
-        export function connect(uri: string): ORM;
+        export function connectAsync(uri: string): Promise<ORM>;
         export function connect(uri: string, callback: (err: Error, db: ORM) => void);
-        export function connect(options: IConnectionOptions): ORM;
+        export function connectAsync(options: IConnectionOptions): Promise<ORM>;
         export function connect(options: IConnectionOptions, callback: (err: Error, db: ORM) => void);
     }
 
